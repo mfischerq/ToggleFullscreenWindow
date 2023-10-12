@@ -1,0 +1,34 @@
+' Gambas module file
+
+Public Procedure Main()
+    If Args.Count <> 2 Then PrintUsageAndExit
+    
+    Select Args[1] ' index 0 is the program name
+        Case "fullscreen" 
+            Fullscreen(True)
+        Case "normal"
+            Fullscreen(False)
+        Case "toggle"
+            ToggleFullscreen()
+        Default 
+            PrintUsageAndExit
+    End Select
+End
+
+Private Procedure PrintUsageAndExit()
+    Print "Usage: ToggleFullscreenWindow.gambas (fullscreen|normal|toggle)"
+    Quit 1  
+End
+
+Private Procedure Fullscreen(a_fullscreen As Boolean)
+    GetActiveWindow().FullScreen = a_fullscreen
+End
+
+Private Procedure ToggleFullscreen()
+    Dim win As DesktopWindow = GetActiveWindow()
+    win.FullScreen = Not win.FullScreen
+End
+
+Private Function GetActiveWindow() As DesktopWindow
+    Return Desktop.Windows.FromHandle(Desktop.ActiveWindow)
+End
